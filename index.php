@@ -206,7 +206,7 @@ function generateAndUpdateToken($chat_id, $state, $message_id = null) {
     foreach ($state['json_data'] as $cred) {
         $uid = $cred['uid'];
         $password = $cred['password'];
-        $api_url = "https://akiru-jwt-10.vercel.app/token?uid=$uid&password=$password";
+        $api_url = "https://tranhao.vercel.app/token?uid=$uid&password=$password";
         $response = httpGet($api_url);
 
         if (isset($response['token']) && !empty($response['token'])) {
