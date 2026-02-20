@@ -206,7 +206,7 @@ function generateAndUpdateToken($chat_id, $state, $message_id = null) {
     foreach ($state['json_data'] as $cred) {
         $uid = $cred['uid'];
         $password = $cred['password'];
-        $api_url = "https://akiru-jwt-10.vercel.app/token?uid=$uid&password=$password";
+        $api_url = "https://tranhao.vercel.app/token?uid=$uid&password=$password";
         $response = httpGet($api_url);
 
         if (isset($response['token']) && !empty($response['token'])) {
@@ -241,10 +241,7 @@ function generateAndUpdateToken($chat_id, $state, $message_id = null) {
                        "⚠️ Invalid: $invalid\n" .
                        "⏱️ Time Taken: $time_taken minutes\n" .
                        "🌐 APIs Used: 1\n" .
-                       "🔥 Next Update On: $next_update_formatted\n\n" .
-                       "🤖 Bot codes by @nr_codex\n" .
-                       "🔑 Jwt api by @I_SHOW_akiru\n" .
-                       "📲 Join Telegram @nr_codex";
+                       "🔥 Next Update On: $next_update_formatted";
 
             $reply_markup = [
                 'inline_keyboard' => [
@@ -272,11 +269,7 @@ function generateAndUpdateToken($chat_id, $state, $message_id = null) {
                    "⚠️ Invalid: $invalid\n" .
                    "⏱️ Time Taken: $time_taken minutes\n" .
                    "🌐 APIs Used: 1\n" .
-                   "🔥 Next Update On: $next_update_formatted\n\n" .
-                   "🤖 Bot codes by @nr_codex\n" .
-                   "🔑 Jwt api by @I_SHOW_akiru\n" .
-                   "📲 Join Telegram @nr_codex";
-
+                   "🔥 Next Update On: $next_update_formatted";
         $reply_markup = [
             'inline_keyboard' => [
                 [
@@ -363,13 +356,13 @@ if ($message === '/start') {
     $state['file_path'] = '';
     $state['json_data'] = [];
     $state['last_message_id'] = null;
-    sendMessage($chat_id, "🚀 Let's get started! Please send your GitHub Personal Access Token:");
+    sendMessage($chat_id, "🚀 Bắt đầu nào! Vui lòng gửi Mã truy cập cá nhân GitHub của bạn:");
     saveUserData($user_data);
 } elseif ($state['step'] === 'ask_github_token' && $message) {
     if (validateGitHubToken($message)) {
         $state['github_token'] = $message;
         $state['step'] = 'ask_repo';
-        sendMessage($chat_id, "✅ Awesome, token received! Now, please send the GitHub repository name in the format username/repository:");
+        sendMessage($chat_id, "✅ Tuyệt vời, đã nhận được token! Giờ, vui lòng gửi tên kho lưu trữ GitHub theo định dạng username/repository:");
         saveUserData($user_data);
     } else {
         sendMessage($chat_id, "❌ Oops, that token doesn't look right. It should start with 'ghp_' and be 40 characters long. Try again:");
@@ -378,7 +371,7 @@ if ($message === '/start') {
     if (validateRepoName($message)) {
         $state['repo'] = $message;
         $state['step'] = 'ask_file_path';
-        sendMessage($chat_id, "📂 Great! Now, please send the path to the JWT file (must end with .json) like -token_ind.json");
+        sendMessage($chat_id, "📂 Tuyệt vời! Giờ, vui lòng gửi đường dẫn đến tệp JWT (phải kết thúc bằng .json) theo định dạng -token_vn.json");
         saveUserData($user_data);
     } else {
         sendMessage($chat_id, "❌ Invalid repository name. Please use the format username/repository. Try again:");
@@ -387,7 +380,7 @@ if ($message === '/start') {
     if (validateFilePath($message)) {
         $state['file_path'] = $message;
         $state['step'] = 'ask_json';
-        sendMessage($chat_id, "📄 <b>Almost there!</b> Please upload a valid <b>uid.json</b> file with this format: ✅\n<code>\n[\n  {\"uid\": \"1234567890\", \"password\": \"PASSWORD1\"},\n  {\"uid\": \"0987654321\", \"password\": \"PASSWORD2\"}\n]\n</code>");
+        sendMessage($chat_id, "📄 <b>Sắp xong rồi!</b> Vui lòng tải lên tệp <b>uid.json</b> hợp lệ với định dạng sau: ✅\n<code>\n[\n {\"uid\": \"1234567890\", \"password\": \"PASSWORD1\"},\n {\"uid\": \"0987654321\", \"password\": ");
         saveUserData($user_data);
     } else {
         sendMessage($chat_id, "❌ Invalid file path. It should end with .json (e.g., path/to/file.json). Try again:");
@@ -439,7 +432,7 @@ if ($message === '/start') {
         'ask_file_path' => 'Đường dẫn đến tệp JWT (kết thúc bằng .json)',
         'ask_json' => 'tệp uid.json hợp lệ'
     ];
-    sendMessage($chat_id, "🙈 Please provide the {$step_prompts[$state['step']]}. Or use /start to begin again! 🚀");
+    sendMessage($chat_id, "🙈 Vui lòng cung cấp {$step_prompts[$state['step']]}. Hoặc sử dụng /start để bắt đầu lại! 🚀");
 } else {
     sendMessage($chat_id, "🌟 Bắt đầu thôi! Vui lòng sử dụng lệnh /start để bắt đầu. 🚀");
 }
